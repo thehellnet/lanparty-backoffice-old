@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint src -c .eslintrc.js --ext js,js",
+    "precommit": "lint-staged",
     "serve:development": "vue-cli-service serve --mode development",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
@@ -35,10 +36,17 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
+    "husky": "^3.0.8",
+    "lint-staged": "^9.4.1",
     "prettier": "^1.18.2",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-fontawesome": "^0.2.0",
     "vue-template-compiler": "^2.6.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
   }
 }

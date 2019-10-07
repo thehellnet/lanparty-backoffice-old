@@ -13,7 +13,7 @@
     </div>
     <div
       class="w-full block flex-grow lg:flex lg:items-center lg:justify-end lg:w-auto lg:visible"
-      :class="{'hidden': !showMenu}"
+      :class="{ hidden: !showMenu }"
     >
       <router-link
         v-for="(nav, index) in navLinks"
@@ -53,5 +53,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
