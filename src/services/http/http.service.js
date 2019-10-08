@@ -12,6 +12,11 @@ const isAuthInterceptorEanbled = (config = {}) => {
   return !(config.hasOwnProperty("auth") && !config.auth);
 };
 
+const defaultHeadersInterceptor = config => {
+  config.headers["Content-Type"] = "application/json";
+  return config;
+};
+
 const authInterceptor = config => {
   if (isAuthInterceptorEanbled(config)) {
     const token = appLocalStorage.getItem("token");
@@ -22,12 +27,15 @@ const authInterceptor = config => {
   return config;
 };
 
-const loggerInterceptor = config => {
-  logger.log(config);
-  return config;
+const loggerInterceptor = data => {
+  logger.debug(data);
+  return data;
 };
 
+httpClient.interceptors.request.use(defaultHeadersInterceptor);
 httpClient.interceptors.request.use(authInterceptor);
 httpClient.interceptors.request.use(loggerInterceptor);
+
+httpClient.interceptors.response.use(loggerInterceptor);
 
 export { httpClient };

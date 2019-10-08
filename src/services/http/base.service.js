@@ -1,4 +1,5 @@
-import { AxiosInstance as httpClient } from "axios";
+import { httpClient } from "./http.service";
+import { ResponseWrapper, ErrorWrapper } from "./util";
 
 export default class BaseService {
   constructor() {
@@ -6,23 +7,92 @@ export default class BaseService {
       throw new Error("Child service class not provide entity");
     }
   }
+
+  responseWrapper(...rest) {
+    return new ResponseWrapper(...rest);
+  }
+
+  errorWrapper(...rest) {
+    return new ErrorWrapper(...rest);
+  }
+
   getAll() {
-    return httpClient.get(`/${this.entity}`);
+    return new Promise((resolve, reject) => {
+      return httpClient
+        .get(`/${this.entity}`)
+        .then(response =>
+          resolve(this.responseWrapper(response, response.data))
+        )
+        .catch(error => {
+          let message = error.response.data
+            ? error.response.data.error
+            : error.response.statusText;
+          reject(this.errorWrapper(error, message));
+        });
+    });
   }
 
   get(id) {
-    return httpClient.get(`/${this.entity}/${id}`);
+    return new Promise((resolve, reject) => {
+      return httpClient
+        .get(`/${this.entity}/${id}`)
+        .then(response =>
+          resolve(this.responseWrapper(response, response.data))
+        )
+        .catch(error => {
+          let message = error.response.data
+            ? error.response.data.error
+            : error.response.statusText;
+          reject(this.errorWrapper(error, message));
+        });
+    });
   }
 
   create(data) {
-    return httpClient.post(`/${this.entity}`, data);
+    return new Promise((resolve, reject) => {
+      return httpClient
+        .post(`/${this.entity}`, data)
+        .then(response =>
+          resolve(this.responseWrapper(response, response.data))
+        )
+        .catch(error => {
+          let message = error.response.data
+            ? error.response.data.error
+            : error.response.statusText;
+          reject(this.errorWrapper(error, message));
+        });
+    });
   }
 
   update(id, data) {
-    return httpClient.put(`/${this.entity}/${id}`, data);
+    return new Promise((resolve, reject) => {
+      return httpClient
+        .patch(`/${this.entity}/${id}`, data)
+        .then(response =>
+          resolve(this.responseWrapper(response, response.data))
+        )
+        .catch(error => {
+          let message = error.response.data
+            ? error.response.data.error
+            : error.response.statusText;
+          reject(this.errorWrapper(error, message));
+        });
+    });
   }
 
   delete(id) {
-    return httpClient.delete(`/${this.entity}/${id}`);
+    return new Promise((resolve, reject) => {
+      return httpClient
+        .delete(`/${this.entity}/${id}`)
+        .then(response =>
+          resolve(this.responseWrapper(response, response.data))
+        )
+        .catch(error => {
+          let message = error.response.data
+            ? error.response.data.error
+            : error.response.statusText;
+          reject(this.errorWrapper(error, message));
+        });
+    });
   }
 }

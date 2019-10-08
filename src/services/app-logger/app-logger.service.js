@@ -4,7 +4,6 @@
 class AppLogger {
   constructor() {
     const level = process.env.LOG_LEVEL || "info";
-    console.log("level", level);
     this.initLogger(level);
   }
 

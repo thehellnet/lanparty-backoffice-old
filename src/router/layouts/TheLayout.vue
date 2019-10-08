@@ -10,6 +10,8 @@
     >
       <slot />
     </div>
+    <base-button @click="hideLader"></base-button>
+    <base-spinner :loading="this.$store.state.loading"></base-spinner>
     <the-footer></the-footer>
   </div>
 </template>
@@ -17,9 +19,17 @@
 <script>
 import TheNavBar from "./TheNavBar";
 import TheFooter from "./TheFooter";
+import BaseSpinner from "../../components/Base/BaseSpinner";
+import BaseButton from "../../components/Base/BaseButton";
 export default {
   name: "TheLayout",
-  components: { TheFooter, TheNavBar }
+  components: { BaseButton, BaseSpinner, TheFooter, TheNavBar },
+
+  methods: {
+    hideLader() {
+      this.$store.dispatch("hide");
+    }
+  }
 };
 </script>
 
