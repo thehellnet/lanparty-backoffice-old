@@ -8,6 +8,7 @@
       { 'bg-secondary': !disabled }
     ]"
     v-on="$listeners"
+    :type="type"
   >
     {{ text }}
   </button>
@@ -18,7 +19,8 @@ export default {
   name: "BaseButton",
   props: {
     disabled: Boolean,
-    text: String
+    text: String,
+    type: String
   }
 };
 </script>

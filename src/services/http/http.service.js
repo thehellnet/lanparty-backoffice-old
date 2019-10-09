@@ -1,14 +1,16 @@
 import axios from "axios";
-import { appLocalStorage } from "../app-storage/app-storage.service";
+import store from "../../store";
+
+import tokenService from "../token.service";
 import { logger } from "../app-logger/app-logger.service";
 
 const config = {
-  baseURL: `${process.env.API_URL}${process.env.API_PREFIX}`
+  baseURL: `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PREFIX}`
 };
 
 const httpClient = axios.create(config);
 
-const isAuthInterceptorEanbled = (config = {}) => {
+const isAuthInterceptorEnabled = (config = {}) => {
   return !(config.hasOwnProperty("auth") && !config.auth);
 };
 
@@ -18,8 +20,8 @@ const defaultHeadersInterceptor = config => {
 };
 
 const authInterceptor = config => {
-  if (isAuthInterceptorEanbled(config)) {
-    const token = appLocalStorage.getItem("token");
+  if (isAuthInterceptorEnabled(config)) {
+    const token = tokenService.getToken();
     if (token) {
       config.headers["x-auth-token"] = token;
     }
@@ -32,10 +34,24 @@ const loggerInterceptor = data => {
   return data;
 };
 
+const showSpinnerInterceptor = data => {
+  store.commit("show");
+  return data;
+};
+
+const hideSpinnerInterceptor = data => {
+  store.commit("hide");
+  return data;
+};
+
 httpClient.interceptors.request.use(defaultHeadersInterceptor);
+httpClient.interceptors.request.use(showSpinnerInterceptor);
 httpClient.interceptors.request.use(authInterceptor);
 httpClient.interceptors.request.use(loggerInterceptor);
 
 httpClient.interceptors.response.use(loggerInterceptor);
+httpClient.interceptors.response.use(hideSpinnerInterceptor, () => {
+  hideSpinnerInterceptor();
+});
 
 export { httpClient };

@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 4200",
     "build": "vue-cli-service build",
     "lint": "eslint src -c .eslintrc.js --ext js,js",
     "precommit": "lint-staged",
-    "serve:development": "vue-cli-service serve --mode development",
+    "serve:development": "vue-cli-service serve --mode development --port 4200",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },

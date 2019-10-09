@@ -3,12 +3,13 @@
 
 class AppLogger {
   constructor() {
-    const level = process.env.LOG_LEVEL || "info";
+    const level = process.env.VUE_APP_LOG_LEVEL || "info";
     this.initLogger(level);
   }
 
   initLogger(level) {
     this.log = this.debug = this.info = this.warn = this.error = () => {};
+    console.log(level);
     switch (level) {
       case "debug":
         this.debug = console.debug.bind(console);

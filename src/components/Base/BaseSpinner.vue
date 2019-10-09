@@ -1,25 +1,27 @@
 <template>
-  <div class="v-spinner" v-show="loading">
-    <div
-      class="v-scale v-scale1"
-      v-bind:style="[spinnerStyle, spinnerDelay1]"
-    ></div>
-    <div
-      class="v-scale v-scale2"
-      v-bind:style="[spinnerStyle, spinnerDelay2]"
-    ></div>
-    <div
-      class="v-scale v-scale3"
-      v-bind:style="[spinnerStyle, spinnerDelay3]"
-    ></div>
-    <div
-      class="v-scale v-scale4"
-      v-bind:style="[spinnerStyle, spinnerDelay4]"
-    ></div>
-    <div
-      class="v-scale v-scale5"
-      v-bind:style="[spinnerStyle, spinnerDelay5]"
-    ></div>
+  <div class="v-spinner-bg" v-show="loading">
+    <div class="v-spinner" :style="spinnerPosition">
+      <div
+        class="v-scale v-scale1"
+        v-bind:style="[spinnerStyle, spinnerDelay1]"
+      ></div>
+      <div
+        class="v-scale v-scale2"
+        v-bind:style="[spinnerStyle, spinnerDelay2]"
+      ></div>
+      <div
+        class="v-scale v-scale3"
+        v-bind:style="[spinnerStyle, spinnerDelay3]"
+      ></div>
+      <div
+        class="v-scale v-scale4"
+        v-bind:style="[spinnerStyle, spinnerDelay4]"
+      ></div>
+      <div
+        class="v-scale v-scale5"
+        v-bind:style="[spinnerStyle, spinnerDelay5]"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -43,6 +45,10 @@ export default {
       type: String,
       default: "4px"
     },
+    totalWidth: {
+      type: String,
+      default: "40px"
+    },
     margin: {
       type: String,
       default: "2px"
@@ -54,12 +60,18 @@ export default {
   },
   data() {
     return {
+      spinnerPosition: {
+        position: "absolute",
+        top: `calc(50% - (${this.height} / 2))`,
+        left: `calc(50% - (${this.totalWidth} / 2))`
+      },
       spinnerStyle: {
         backgroundColor: this.color,
         height: this.height,
         width: this.width,
         margin: this.margin,
         borderRadius: this.radius,
+
         display: "inline-block",
         animationName: "v-scaleStretchDelay",
         animationDuration: "1s",
@@ -90,13 +102,20 @@ export default {
 };
 </script>
 
-<style>
-.v-spinner {
-  /*	  font-size: 10px; 
-            width: 60px;
-            height: 40px;*/
-  /*margin: 25px auto;*/
-  text-align: center;
+<style lang="scss">
+.v-spinner-bg {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+  & .v-spinner {
+    position: absolute;
+    text-align: center;
+  }
 }
 @-webkit-keyframes v-scaleStretchDelay {
   0%,

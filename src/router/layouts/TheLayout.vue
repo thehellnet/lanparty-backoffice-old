@@ -10,8 +10,6 @@
     >
       <slot />
     </div>
-    <base-button @click="hide()" :text="'Hide'"></base-button>
-    <base-button @click="show()" :text="'Show'"></base-button>
     <the-footer></the-footer>
     <base-spinner :loading="this.loading"></base-spinner>
   </div>
@@ -21,18 +19,15 @@
 import TheNavBar from "./TheNavBar";
 import TheFooter from "./TheFooter";
 import BaseSpinner from "../../components/Base/BaseSpinner";
-import BaseButton from "../../components/Base/BaseButton";
-import { mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
+
 export default {
   name: "TheLayout",
-  components: { BaseButton, BaseSpinner, TheFooter, TheNavBar },
+  components: { BaseSpinner, TheFooter, TheNavBar },
   computed: {
     ...mapState({
       loading: state => state.spinner.loading
     })
-  },
-  methods: {
-    ...mapMutations(["hide", "show"])
   }
 };
 </script>

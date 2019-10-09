@@ -32,7 +32,7 @@
         @focus="clearStatus"
         @keypress="clearStatus"
       ></base-input>
-      <base-button :text="'LogIn'"></base-button>
+      <base-button :text="'LogIn'" :type="'submit'"></base-button>
     </form>
   </div>
 </template>
@@ -40,6 +40,8 @@
 <script>
 import BaseInput from "./Base/BaseInput";
 import BaseButton from "./Base/BaseButton";
+import * as authService from "../services/auth.service";
+import { logger } from "../services/app-logger/app-logger.service";
 export default {
   name: "LoginForm",
   components: { BaseButton, BaseInput },
@@ -64,14 +66,14 @@ export default {
         return;
       }
 
-      /*this.$emit("add:employee", this.employee);
-      this.$refs.first.focus();
-      this.employee = {
-        name: "",
-        email: ""
-      };
-      this.error = false;
-      this.success = true;*/
+      authService
+        .login(this.user)
+        .then(() => {
+          this.$router.replace({ path: "/home" });
+        })
+        .catch(error => {
+          logger.error(error);
+        });
       this.submitting = false;
     },
     clearStatus() {

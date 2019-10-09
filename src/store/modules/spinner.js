@@ -1,6 +1,6 @@
 export const spinner = {
   state: {
-    loading: true
+    loading: false
   },
   mutations: {
     show(state) {
