@@ -10,9 +10,10 @@
     >
       <slot />
     </div>
-    <base-button @click="hideLader"></base-button>
-    <base-spinner :loading="this.$store.state.loading"></base-spinner>
+    <base-button @click="hide()" :text="'Hide'"></base-button>
+    <base-button @click="show()" :text="'Show'"></base-button>
     <the-footer></the-footer>
+    <base-spinner :loading="this.loading"></base-spinner>
   </div>
 </template>
 
@@ -21,14 +22,17 @@ import TheNavBar from "./TheNavBar";
 import TheFooter from "./TheFooter";
 import BaseSpinner from "../../components/Base/BaseSpinner";
 import BaseButton from "../../components/Base/BaseButton";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "TheLayout",
   components: { BaseButton, BaseSpinner, TheFooter, TheNavBar },
-
+  computed: {
+    ...mapState({
+      loading: state => state.spinner.loading
+    })
+  },
   methods: {
-    hideLader() {
-      this.$store.dispatch("hide");
-    }
+    ...mapMutations(["hide", "show"])
   }
 };
 </script>

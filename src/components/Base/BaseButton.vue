@@ -7,6 +7,7 @@
       { 'hover:bg-button-hover': !disabled },
       { 'bg-secondary': !disabled }
     ]"
+    v-on="$listeners"
   >
     {{ text }}
   </button>
