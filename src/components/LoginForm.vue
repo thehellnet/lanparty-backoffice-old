@@ -5,16 +5,14 @@
       @submit.prevent="handleSubmit"
     >
       <base-input
-        :id="'username'"
-        :label="'Username'"
+        :id="'email'"
+        :label="'Email'"
         :placeholder="'admin'"
         :type="'text'"
         :invalid-msg="
-          error && submitting && this.invalidUsername
-            ? 'Username is required'
-            : ''
+          error && submitting && this.invalidEmail ? 'Email is required' : ''
         "
-        v-model="user.username"
+        v-model="user.email"
         @focus="clearStatus"
         @keypress="clearStatus"
       ></base-input>
@@ -51,7 +49,7 @@ export default {
       submitting: false,
       success: false,
       user: {
-        username: "",
+        email: "",
         password: ""
       }
     };
@@ -61,7 +59,7 @@ export default {
       this.submitting = true;
       this.clearStatus();
 
-      if (this.invalidUsername || this.invalidPassword) {
+      if (this.invalidEmail || this.invalidPassword) {
         this.error = true;
         return;
       }
@@ -82,7 +80,7 @@ export default {
     }
   },
   computed: {
-    invalidUsername() {
+    invalidEmail() {
       return this.user.username === "";
     },
 

@@ -24,9 +24,9 @@ export default class BaseService {
           resolve(this.responseWrapper(response, response.data))
         )
         .catch(error => {
-          let message = error.response.data
-            ? error.response.data.error
-            : error.response.statusText;
+          let message = error.hasOwnProperty("message")
+            ? error.message
+            : error.statusMessage;
           reject(this.errorWrapper(error, message));
         });
     });
@@ -40,9 +40,9 @@ export default class BaseService {
           resolve(this.responseWrapper(response, response.data))
         )
         .catch(error => {
-          let message = error.response.data
-            ? error.response.data.error
-            : error.response.statusText;
+          let message = error.hasOwnProperty("message")
+            ? error.message
+            : error.statusMessage;
           reject(this.errorWrapper(error, message));
         });
     });
@@ -56,9 +56,9 @@ export default class BaseService {
           resolve(this.responseWrapper(response, response.data))
         )
         .catch(error => {
-          let message = error.response.data
-            ? error.response.data.error
-            : error.response.statusText;
+          let message = error.hasOwnProperty("message")
+            ? error.message
+            : error.statusMessage;
           reject(this.errorWrapper(error, message));
         });
     });
@@ -72,9 +72,9 @@ export default class BaseService {
           resolve(this.responseWrapper(response, response.data))
         )
         .catch(error => {
-          let message = error.response.data
-            ? error.response.data.error
-            : error.response.statusText;
+          let message = error.hasOwnProperty("message")
+            ? error.message
+            : error.statusMessage;
           reject(this.errorWrapper(error, message));
         });
     });
@@ -88,9 +88,9 @@ export default class BaseService {
           resolve(this.responseWrapper(response, response.data))
         )
         .catch(error => {
-          let message = error.response.data
-            ? error.response.data.error
-            : error.response.statusText;
+          let message = error.hasOwnProperty("message")
+            ? error.message
+            : error.statusMessage;
           reject(this.errorWrapper(error, message));
         });
     });

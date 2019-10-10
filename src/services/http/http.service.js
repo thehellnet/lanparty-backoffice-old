@@ -16,6 +16,7 @@ const isAuthInterceptorEnabled = (config = {}) => {
 
 const defaultHeadersInterceptor = config => {
   config.headers["Content-Type"] = "application/json";
+  logger.log(config.headers);
   return config;
 };
 
@@ -23,7 +24,7 @@ const authInterceptor = config => {
   if (isAuthInterceptorEnabled(config)) {
     const token = tokenService.getToken();
     if (token) {
-      config.headers["x-auth-token"] = token;
+      config.headers["X-Auth-Token"] = token;
     }
   }
   return config;

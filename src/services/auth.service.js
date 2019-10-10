@@ -1,4 +1,5 @@
 import { httpClient } from "./http/http.service";
+import { logger } from "./app-logger/app-logger.service";
 import tokenService from "./token.service";
 
 export function login(user) {
@@ -6,6 +7,7 @@ export function login(user) {
     httpClient
       .post("/appUser/login", user, { auth: false })
       .then(response => {
+        logger.log(response);
         let data = response.data;
         if (data.token) {
           tokenService.setToken(data.token);
@@ -21,7 +23,7 @@ export function login(user) {
 export function checkTokenValidity() {
   return new Promise((resolve, reject) => {
     httpClient
-      .post("/appUser/tokenValid")
+      .get("/appUser/isTokenValid")
       .then(response => {
         resolve(response);
       })
