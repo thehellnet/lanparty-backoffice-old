@@ -1,5 +1,4 @@
-import { httpClient } from "./http.service";
-import { ResponseWrapper, ErrorWrapper } from "./util";
+import httpClient from "./http.service";
 
 export default class BaseService {
   constructor() {
@@ -8,91 +7,23 @@ export default class BaseService {
     }
   }
 
-  responseWrapper(...rest) {
-    return new ResponseWrapper(...rest);
-  }
-
-  errorWrapper(...rest) {
-    return new ErrorWrapper(...rest);
-  }
-
   getAll() {
-    return new Promise((resolve, reject) => {
-      return httpClient
-        .get(`/${this.entity}`)
-        .then(response =>
-          resolve(this.responseWrapper(response, response.data))
-        )
-        .catch(error => {
-          let message = error.hasOwnProperty("message")
-            ? error.message
-            : error.statusMessage;
-          reject(this.errorWrapper(error, message));
-        });
-    });
+    return httpClient.get(`/${this.entity}`);
   }
 
   get(id) {
-    return new Promise((resolve, reject) => {
-      return httpClient
-        .get(`/${this.entity}/${id}`)
-        .then(response =>
-          resolve(this.responseWrapper(response, response.data))
-        )
-        .catch(error => {
-          let message = error.hasOwnProperty("message")
-            ? error.message
-            : error.statusMessage;
-          reject(this.errorWrapper(error, message));
-        });
-    });
+    return httpClient.get(`/${this.entity}/${id}`);
   }
 
   create(data) {
-    return new Promise((resolve, reject) => {
-      return httpClient
-        .post(`/${this.entity}`, data)
-        .then(response =>
-          resolve(this.responseWrapper(response, response.data))
-        )
-        .catch(error => {
-          let message = error.hasOwnProperty("message")
-            ? error.message
-            : error.statusMessage;
-          reject(this.errorWrapper(error, message));
-        });
-    });
+    return httpClient.post(`/${this.entity}`, data);
   }
 
   update(id, data) {
-    return new Promise((resolve, reject) => {
-      return httpClient
-        .patch(`/${this.entity}/${id}`, data)
-        .then(response =>
-          resolve(this.responseWrapper(response, response.data))
-        )
-        .catch(error => {
-          let message = error.hasOwnProperty("message")
-            ? error.message
-            : error.statusMessage;
-          reject(this.errorWrapper(error, message));
-        });
-    });
+    return httpClient.patch(`/${this.entity}/${id}`, data);
   }
 
   delete(id) {
-    return new Promise((resolve, reject) => {
-      return httpClient
-        .delete(`/${this.entity}/${id}`)
-        .then(response =>
-          resolve(this.responseWrapper(response, response.data))
-        )
-        .catch(error => {
-          let message = error.hasOwnProperty("message")
-            ? error.message
-            : error.statusMessage;
-          reject(this.errorWrapper(error, message));
-        });
-    });
+    return httpClient.delete(`/${this.entity}/${id}`);
   }
 }

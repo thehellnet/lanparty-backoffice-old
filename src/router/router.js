@@ -1,8 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import store from "../store";
 import tokenService from "../services/token.service";
-import * as authService from "../services/auth.service";
+import httpClient from "../services/http/http.service";
+import logger from "../services/app-logger/app-logger.service";
 
 Vue.use(Router);
 
@@ -16,12 +18,16 @@ const router = new Router({
       component: Home,
       beforeEnter: async (to, from, next) => {
         if (!tokenService.getToken()) {
+          logger.debug("no token in local storage");
           next({ path: "/login" });
         } else {
           try {
-            await authService.checkTokenValidity();
+            const response = await httpClient.get("/appUser/isTokenValid");
+            logger.info("token is valid", response);
+            store.commit("auth/setAuthenticated", true);
             next();
           } catch (e) {
+            logger.info("token expired", e);
             next({ path: "/login" });
           }
         }
@@ -30,16 +36,13 @@ const router = new Router({
     {
       path: "/login",
       name: "login",
-
-      component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Login.vue")
+      component: () => import("./views/Login.vue")
     },
     {
       path: "/about",
       name: "about",
 
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      component: () => import("./views/About.vue")
     }
   ]
 });

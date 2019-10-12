@@ -1,7 +1,7 @@
 <template>
   <nav class="flex items-center justify-between flex-wrap bg-primary p-6">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <span class="font-semibold text-3xl tracking-tight">[hnt]</span>
+      <a href="/" class="font-semibold text-3xl tracking-tight">[hnt]</a>
     </div>
     <div class="block lg:hidden">
       <button
@@ -25,17 +25,23 @@
         {{ nav.title }}
       </router-link>
       <a
+        v-if="!this.isAuthenticated"
         href="/login"
         class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-primary hover:bg-white mt-4 lg:mt-0"
         >Login</a
       >
+      <BaseIconButton v-else :icon="'user'"></BaseIconButton>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import BaseIconButton from "../../components/Base/BaseIconButton";
+
 export default {
   name: "TheNavBar",
+  components: { BaseIconButton },
   data() {
     return {
       navLinks: [
@@ -44,6 +50,11 @@ export default {
       ],
       showMenu: false
     };
+  },
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated"
+    })
   },
   methods: {
     toggleMenu() {

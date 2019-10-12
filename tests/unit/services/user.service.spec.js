@@ -1,19 +1,16 @@
-import { login } from "../../../src/services/auth.service";
 import userService from "../../../src/services/user.service";
-import { appLocalStorage } from "../../../src/services/app-storage/app-storage.service";
-import { logger } from "../../../src/services/app-logger/app-logger.service";
+import store from "../../../src/store";
 
 let newUser;
 
 describe("User Service", () => {
   beforeAll(async () => {
     const user = { email: "admin", password: "admin" };
-    const response = await login(user);
-    appLocalStorage.setItem("token", response.data.token);
+    await store.dispatch("auth/doLogin", user);
   });
 
   afterAll(() => {
-    appLocalStorage.clear();
+    store.dispatch("auth/doLogout");
   });
 
   it("get all users", async () => {
@@ -36,9 +33,7 @@ describe("User Service", () => {
     try {
       await userService.get(id);
     } catch (e) {
-      logger.debug(e);
       expect(e.status).toEqual(404);
-      expect(e.message).toEqual("Request failed with status code 404");
     }
   });
 

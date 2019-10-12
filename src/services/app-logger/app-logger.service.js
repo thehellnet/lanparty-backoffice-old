@@ -9,7 +9,6 @@ class AppLogger {
 
   initLogger(level) {
     this.log = this.debug = this.info = this.warn = this.error = () => {};
-    console.log(level);
     switch (level) {
       case "debug":
         this.debug = console.debug.bind(console);
@@ -36,4 +35,4 @@ class AppLogger {
 
 const logger = new AppLogger();
 
-export { logger };
+export default logger;

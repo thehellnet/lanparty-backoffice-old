@@ -38,8 +38,8 @@
 <script>
 import BaseInput from "./Base/BaseInput";
 import BaseButton from "./Base/BaseButton";
-import * as authService from "../services/auth.service";
-import { logger } from "../services/app-logger/app-logger.service";
+import logger from "../services/app-logger/app-logger.service";
+
 export default {
   name: "LoginForm",
   components: { BaseButton, BaseInput },
@@ -64,13 +64,13 @@ export default {
         return;
       }
 
-      authService
-        .login(this.user)
+      this.$store
+        .dispatch("auth/doLogin", this.user)
         .then(() => {
-          this.$router.replace({ path: "/home" });
+          this.$router.replace("/");
         })
         .catch(error => {
-          logger.error(error);
+          logger.debug(error);
         });
       this.submitting = false;
     },

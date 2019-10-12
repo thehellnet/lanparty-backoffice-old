@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../../store";
 
 import tokenService from "../token.service";
-import { logger } from "../app-logger/app-logger.service";
+import { ErrorWrapper } from "./utils";
 
 const config = {
   baseURL: `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PREFIX}`
@@ -15,8 +15,8 @@ const isAuthInterceptorEnabled = (config = {}) => {
 };
 
 const defaultHeadersInterceptor = config => {
-  config.headers["Content-Type"] = "application/json";
-  logger.log(config.headers);
+  config.headers["content-type"] = "application/json";
+  console.log(config);
   return config;
 };
 
@@ -24,35 +24,40 @@ const authInterceptor = config => {
   if (isAuthInterceptorEnabled(config)) {
     const token = tokenService.getToken();
     if (token) {
-      config.headers["X-Auth-Token"] = token;
+      config.headers["x-auth-token"] = token;
     }
   }
   return config;
 };
 
-const loggerInterceptor = data => {
-  logger.debug(data);
-  return data;
+const handleResponseError = error => {
+  store.commit("spinner/hide");
+  return Promise.reject(new ErrorWrapper(error));
+};
+
+const handleResponseSuccess = response => {
+  store.commit("spinner/hide");
+  return response;
 };
 
 const showSpinnerInterceptor = data => {
-  store.commit("show");
+  store.commit("spinner/show");
   return data;
 };
 
 const hideSpinnerInterceptor = data => {
-  store.commit("hide");
+  store.commit("spinner/hide");
   return data;
 };
 
-httpClient.interceptors.request.use(defaultHeadersInterceptor);
 httpClient.interceptors.request.use(showSpinnerInterceptor);
+httpClient.interceptors.request.use(defaultHeadersInterceptor);
 httpClient.interceptors.request.use(authInterceptor);
-httpClient.interceptors.request.use(loggerInterceptor);
 
-httpClient.interceptors.response.use(loggerInterceptor);
-httpClient.interceptors.response.use(hideSpinnerInterceptor, () => {
-  hideSpinnerInterceptor();
-});
+httpClient.interceptors.response.use(hideSpinnerInterceptor);
+httpClient.interceptors.response.use(
+  handleResponseSuccess,
+  handleResponseError
+);
 
-export { httpClient };
+export default httpClient;

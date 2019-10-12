@@ -11,7 +11,9 @@
       <slot />
     </div>
     <the-footer></the-footer>
-    <base-spinner :loading="this.loading"></base-spinner>
+    <base-spinner-container :loading="this.loading">
+      <base-spinner></base-spinner>
+    </base-spinner-container>
   </div>
 </template>
 
@@ -20,10 +22,11 @@ import TheNavBar from "./TheNavBar";
 import TheFooter from "./TheFooter";
 import BaseSpinner from "../../components/Base/BaseSpinner";
 import { mapState } from "vuex";
+import BaseSpinnerContainer from "../../components/Base/BaseSpinnerContainer";
 
 export default {
   name: "TheLayout",
-  components: { BaseSpinner, TheFooter, TheNavBar },
+  components: { BaseSpinnerContainer, BaseSpinner, TheFooter, TheNavBar },
   computed: {
     ...mapState({
       loading: state => state.spinner.loading

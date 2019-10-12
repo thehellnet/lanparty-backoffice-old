@@ -1,4 +1,5 @@
 export const spinner = {
+  namespaced: true,
   state: {
     loading: false
   },
