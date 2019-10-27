@@ -22,7 +22,7 @@ const router = new Router({
           next({ path: "/login" });
         } else {
           try {
-            const response = await httpClient.get("/appUser/isTokenValid");
+            const response = await httpClient.get("/crud/appUser/isTokenValid");
             logger.info("token is valid", response);
             store.commit("auth/setAuthenticated", true);
             next();
@@ -41,8 +41,13 @@ const router = new Router({
     {
       path: "/about",
       name: "about",
-
       component: () => import("./views/About.vue")
+    },
+    {
+      path: "/entity/:entity",
+      name: "entity",
+      props: true,
+      component: () => import("./views/Entity.vue")
     }
   ]
 });

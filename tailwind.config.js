@@ -5,19 +5,32 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "var(--color-primary)",
-        secondary: "var(--color-secondary)",
-        warning: "var(--color-warning)",
-        success: "var(--color-success)",
-        error: "var(--color-error)",
-        button: {
-          disabled: "var(--color-button-disabled)",
-          active: "var(--color-button-active)",
-          hover: "var(--color-button-hover)"
+        primary: {
+          default: "var(--color-primary)",
+          variant: "var(--color-primary-variant)"
+        },
+        secondary: {
+          default: "var(--color-secondary)",
+          variant: "var(--color-secondary-variant)"
+        },
+        text: {
+          primary: "var(--color-text-primary)",
+          secondary: "var(--color-text-secondary)"
+        },
+        error: {
+          default: "var(--color-error)"
+        },
+        background: {
+          default: "var(--color-background)"
         }
       }
     }
   },
-  variants: {},
-  plugins: []
+  variants: {
+    boxShadow: ["responsive"]
+  },
+  plugins: [],
+  corePlugins: {
+    fill: false
+  }
 };

@@ -8,22 +8,26 @@ export default class BaseService {
   }
 
   getAll() {
-    return httpClient.get(`/${this.entity}`);
+    return httpClient.get(`/crud/${this.entity}`);
   }
 
   get(id) {
-    return httpClient.get(`/${this.entity}/${id}`);
+    return httpClient.get(`/crud/${this.entity}/${id}`);
   }
 
   create(data) {
-    return httpClient.post(`/${this.entity}`, data);
+    return httpClient.post(`/crud/${this.entity}`, data);
   }
 
   update(id, data) {
-    return httpClient.patch(`/${this.entity}/${id}`, data);
+    return httpClient.patch(`/crud/${this.entity}/${id}`, data);
   }
 
   delete(id) {
-    return httpClient.delete(`/${this.entity}/${id}`);
+    return httpClient.delete(`/crud/${this.entity}/${id}`);
+  }
+
+  config() {
+    return httpClient.get(`/config/${this.entity}`);
   }
 }

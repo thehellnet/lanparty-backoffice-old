@@ -23,7 +23,7 @@ export const auth = {
   actions: {
     doLogin(state, user) {
       return httpClient
-        .post("/appUser/login", user, { auth: false })
+        .post("/crud/appUser/login", user, { auth: false })
         .then(res => {
           tokenService.setToken(res.data.token);
           state.commit("setAuthenticated", true);

@@ -6,6 +6,6 @@ class UserService extends BaseService {
   }
 }
 
-const userService = new UserService();
+const appUserService = new UserService();
 
-export default userService;
+export default appUserService;

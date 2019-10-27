@@ -1,6 +1,6 @@
 <template>
   <div
-    class="theme-default bg-grey-200 flex flex-col min-h-screen "
+    class="theme-default bg-background flex flex-col min-h-screen "
     id="app-container"
   >
     <the-nav-bar></the-nav-bar>

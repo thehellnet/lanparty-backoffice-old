@@ -46,7 +46,8 @@ export default {
     return {
       navLinks: [
         { title: "Edit", href: "/edit" },
-        { title: "About", href: "/about" }
+        { title: "About", href: "/about" },
+        { title: "Entity", href: "/entity/appUser" }
       ],
       showMenu: false
     };

@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-secondary hover:bg-button.hover disableb:bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    class="bg-secondary hover:bg-secondary-variant disabled:bg-secondary-variant text-text-primary font-bold py-2 px-4 rounded focus:border-secondary focus:outline-none focus:shadow-outline"
     :class="[
       { 'cursor-not-allowed': disabled },
       { 'bg-button-disabled': disabled },
