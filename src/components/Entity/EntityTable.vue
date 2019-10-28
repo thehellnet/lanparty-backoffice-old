@@ -12,25 +12,44 @@
       <thead>
         <tr>
           <th
-            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light"
+            class="py-4 px-6 bg-background-light font-bold uppercase text-sm text-text-secondary border-b border-background-dark"
             v-for="configField in entityTableConfig.fields"
             :key="configField.name"
           >
             {{ configField.name }}
           </th>
+          <th
+            class="py-4 px-6 bg-background-light font-bold uppercase text-sm text-text-secondary border-b border-background-dark"
+          >
+            Actions
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          class="hover:bg-grey-lighter"
-          v-for="entity in entityList"
+          :class="{
+            'bg-background-variant': index % 2 == 0,
+            'bg-background': index % 2 == 1
+          }"
+          v-for="(entity, index) in entityList"
           :key="entity.id"
         >
           <td
             v-for="configField in entityTableConfig.fields"
             :key="configField.name"
           >
-            {{ entity[configField.name] }}
+            <div v-if="configField.type === 'list'">
+              {{ entity[configField.name] | printArray }}
+            </div>
+            <div v-else>
+              {{ entity[configField.name] }}
+            </div>
+          </td>
+          <td class="text-center">
+            <base-icon-button
+              :icon="'edit'"
+              class="text-text-secondary"
+            ></base-icon-button>
           </td>
         </tr>
       </tbody>
@@ -41,9 +60,11 @@
 <script>
 import logger from "../../services/app-logger/app-logger.service";
 import { entityService } from "../../services/entity.service";
+import BaseIconButton from "../Base/BaseIconButton";
 
 export default {
   name: "EntityTable",
+  components: { BaseIconButton },
   props: {
     entity: {
       type: String
@@ -62,13 +83,23 @@ export default {
       entityService: entityService[this.entity]
     };
   },
+  filters: {
+    printArray(array) {
+      if (!array) return "";
+      let result = "";
+      const separator = " - ";
+      for (let item of array) {
+        result += item + separator;
+      }
+      return result.replace(new RegExp(separator + "$"), "");
+    }
+  },
   created() {
     logger.debug(this.entity);
     Promise.all([this.entityService.getAll(), this.entityService.config()])
-      .then(data => {
-        logger.info(data);
-        this.entityList = data[0];
-        this.entityTableConfig = data[1];
+      .then(response => {
+        this.entityList = response[0].data;
+        this.entityTableConfig = response[1].data;
       })
       .catch(err => {
         logger.error(err);

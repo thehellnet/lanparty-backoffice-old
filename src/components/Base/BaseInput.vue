@@ -2,13 +2,13 @@
   <div>
     <label
       v-if="label"
-      class="block text-gray-700 text-sm font-bold mb-2"
+      class="block text-text-secondary text-sm font-bold mb-2"
       :for="id"
     >
       {{ label }}
     </label>
     <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-primary mb-3 leading-tight focus:outline-none"
       :class="{
         'border-error': !!invalidMsg,
         'focus:shadow-outline': !invalidMsg
@@ -19,7 +19,7 @@
       :value="value"
       v-on="inputListeners"
     />
-    <p v-if="invalidMsg" class="text-red-500 text-xs italic">
+    <p v-if="invalidMsg" class="text-error text-xs italic">
       {{ invalidMsg }}
     </p>
   </div>

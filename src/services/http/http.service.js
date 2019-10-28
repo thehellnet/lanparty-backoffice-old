@@ -37,7 +37,7 @@ const handleResponseError = error => {
 
 const handleResponseSuccess = response => {
   store.commit("spinner/hide");
-  return response.data;
+  return response;
 };
 
 const showSpinnerInterceptor = data => {

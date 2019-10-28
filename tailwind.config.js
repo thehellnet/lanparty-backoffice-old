@@ -6,12 +6,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          light: "var(--color-primary-variant)",
           default: "var(--color-primary)",
-          variant: "var(--color-primary-variant)"
+          dark: "var(--color-primary-dark)"
         },
         secondary: {
+          light: "var(--color-secondary-light)",
           default: "var(--color-secondary)",
-          variant: "var(--color-secondary-variant)"
+          dark: "var(--color-secondary-dark)"
         },
         text: {
           primary: "var(--color-text-primary)",
@@ -21,7 +23,9 @@ module.exports = {
           default: "var(--color-error)"
         },
         background: {
-          default: "var(--color-background)"
+          light: "var(--color-background-light)",
+          default: "var(--color-background)",
+          dark: "var(--color-background-dark)"
         }
       }
     }

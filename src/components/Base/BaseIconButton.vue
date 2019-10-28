@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-transparent hover:bg-button.hover disableb:bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    class="bg-transparent hover:bg-white text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     v-on="$listeners"
     :type="type"
   >
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "BaseButton",
+  name: "BaseIconButton",
   props: {
     disabled: Boolean,
     icon: String,
