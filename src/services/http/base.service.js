@@ -20,7 +20,7 @@ export default class BaseService {
   }
 
   update(id, data) {
-    return httpClient.patch(`/crud/${this.entity}/${id}`, data);
+    return httpClient.put(`/crud/${this.entity}/${id}`, data);
   }
 
   delete(id) {
