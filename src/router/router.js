@@ -22,7 +22,7 @@ const router = new Router({
           next({ path: "/login" });
         } else {
           try {
-            const response = await httpClient.get("/appUser/isTokenValid");
+            const response = await httpClient.get("/isTokenValid");
             logger.info("token is valid", response);
             store.commit("auth/setAuthenticated", true);
             next();

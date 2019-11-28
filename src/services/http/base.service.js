@@ -8,26 +8,26 @@ export default class BaseService {
   }
 
   getAll() {
-    return httpClient.get(`/crud/${this.entity}`);
+    return httpClient.get(`/rest/${this.entity}s`);
   }
 
   get(id) {
-    return httpClient.get(`/crud/${this.entity}/${id}`);
+    return httpClient.get(`/rest/${this.entity}s/${id}`);
   }
 
   create(data) {
-    return httpClient.post(`/crud/${this.entity}`, data);
+    return httpClient.post(`/rest/${this.entity}s`, data);
   }
 
   update(id, data) {
-    return httpClient.put(`/crud/${this.entity}/${id}`, data);
+    return httpClient.put(`/rest/${this.entity}s/${id}`, data);
   }
 
   delete(id) {
-    return httpClient.delete(`/crud/${this.entity}/${id}`);
+    return httpClient.delete(`/rest/${this.entity}s/${id}`);
   }
 
-  config() {
-    return httpClient.get(`/config/${this.entity}`);
+  profile() {
+    return httpClient.get(`/rest/profile/${this.entity}s`);
   }
 }

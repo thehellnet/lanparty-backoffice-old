@@ -60,7 +60,7 @@ export default {
   created() {
     logger.debug(this.entity);
     this.entityService
-      .config()
+      .profile()
       .then(response => {
         this.entityTableConfig = response.data;
       })

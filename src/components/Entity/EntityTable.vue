@@ -96,7 +96,7 @@ export default {
   },
   created() {
     logger.debug(this.entity);
-    Promise.all([this.entityService.getAll(), this.entityService.config()])
+    Promise.all([this.entityService.getAll(), this.entityService.profile()])
       .then(response => {
         this.entityList = response[0].data;
         this.entityTableConfig = response[1].data;
