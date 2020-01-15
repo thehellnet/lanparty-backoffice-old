@@ -22,10 +22,12 @@ export const auth = {
   },
   actions: {
     doLogin(state, user) {
-      return httpClient.post("/login", user, { auth: false }).then(res => {
-        tokenService.setToken(res.data.token);
-        state.commit("setAuthenticated", true);
-      });
+      return httpClient
+        .post("/v1/user/login", user, { auth: false })
+        .then(res => {
+          tokenService.setToken(res.data.token);
+          state.commit("setAuthenticated", true);
+        });
     },
     doLogout(context) {
       tokenService.clearToken();
